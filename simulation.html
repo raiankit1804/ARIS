@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>isro-hack</title>
+    <link rel="icon" type="image/x-icon" href="sources/favicon.jpg">
+    <link rel="stylesheet" href="css/simulation.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+    <div id="stars-container">
+        <div id="stars1"></div>
+        <div id="stars2"></div>
+        <div id="stars3"></div>
+    </div>
+
+    <div id="splash-screen">
+        <img src="sources/rock-splash.gif" alt="Loading ISRO Logo" class="splash-logo">
+        <div class="loading-text">IGNITION TO SIMULATION PAGE!!!!!</div>
+    </div>
+    <div id="main-content" class="hidden">
+        
+        <nav class="navbar" style="z-index: 1000;">
+            <div class="nav-brand">
+                <img src="sources/logo.gif" alt="ISRO Logo" class="nav-logo">
+                <span class="brand-text">ISRO-HACK</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">DASHBOARD</a></li>
+                <li><a href="Inventory.html">INVENTORY</a></li>
+                <li><a href="waste.html">WASTE MANAGEMENT</a></li>
+                <li><a href="simulation.html">SIMULATION</a></li>
+                <li><a href="about.html">ABOUT</a></li>
+
+            </ul>
+            <div class="hamburger">
+                <div class="line line1"></div>
+                <div class="line line2"></div>
+                <div class="line line3"></div>
+            </div>
+        </nav>
+        
+
+        <body>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Time Simulation</h5>
+                            <form id="simulationForm" onsubmit="runSimulation(event)">
+                                <div class="mb-3">
+                                    <label class="form-label">Number of Days</label>
+                                    <input type="number" class="form-control" name="numOfDays" min="1" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Items to Use Daily</label>
+                                    <div id="itemsList">
+                                        <div class="input-group mb-2">
+                                            <input type="text" class="form-control" placeholder="Item ID" name="items[]">
+                                            <button type="button" class="btn btn-outline-danger" onclick="removeItem(this)">Remove</button>
+                                        </div>
+                                    </div>
+                                    <button type="button" class="btn btn-outline-secondary" onclick="addItem()">Add Item</button>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Run Simulation</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Simulation Results</h5>
+                            <div id="simulationResults">
+                                <!-- Results will be displayed here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endblock %}
+            
+            {% block scripts %}
+            <script>
+            function addItem() {
+                const itemsList = document.getElementById('itemsList');
+                const newItem = document.createElement('div');
+                newItem.className = 'input-group mb-2';
+                newItem.innerHTML = `
+                    <input type="text" class="form-control" placeholder="Item ID" name="items[]">
+                    <button type="button" class="btn btn-outline-danger" onclick="removeItem(this)">Remove</button>
+                `;
+                itemsList.appendChild(newItem);
+            }
+            
+            function removeItem(button) {
+                button.closest('.input-group').remove();
+            }
+            
+            function runSimulation(event) {
+                event.preventDefault();
+                const form = event.target;
+                const items = Array.from(form.querySelectorAll('input[name="items[]"]'))
+                    .map(input => ({ itemId: input.value }))
+                    .filter(item => item.itemId);
+            
+                const data = {
+                    numOfDays: parseInt(form.numOfDays.value),
+                    itemsToBeUsedPerDay: items
+                };
+            
+                axios.post('/api/simulate/day', data)
+                    .then(response => {
+                        if (response.data.success) {
+                            const results = response.data.changes;
+                            document.getElementById('simulationResults').innerHTML = `
+                                <div class="alert alert-info">
+                                    <strong>New Date:</strong> ${formatDate(response.data.newDate)}
+                                </div>
+                                
+                                <h6>Items Used:</h6>
+                                <ul>
+                                    ${results.itemsUsedToday.map(item => `
+                                        <li>${item.name} (${item.itemId}) - ${item.remainingUses} uses remaining</li>
+                                    `).join('')}
+                                </ul>
+            
+                                ${results.itemsDepletedToday.length ? `
+                                    <h6>Items Depleted:</h6>
+                                    <ul>
+                                        ${results.itemsDepletedToday.map(item => `
+                                            <li>${item.name} (${item.itemId})</li>
+                                        `).join('')}
+                                    </ul>
+                                ` : ''}
+            
+                                ${results.itemsExpiredToday.length ? `
+                                    <h6>Items Expired:</h6>
+                                    <ul>
+                                        ${results.itemsExpiredToday.map(item => `
+                                            <li>${item.name} (${item.itemId})</li>
+                                        `).join('')}
+                                    </ul>
+                                ` : ''}
+                            `;
+                            showAlert('Simulation completed successfully');
+                        }
+                    })
+                    .catch(error => showAlert(error.message, 'danger'));
+            }
+            </script>
+        </body>
+        <script src="js/about.js"></script>
+        </html>
+        

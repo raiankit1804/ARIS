@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>isro-hack</title>
+    <link rel="icon" type="image/x-icon" href="sources/favicon.jpg">
+    <link rel="stylesheet" href="css/inventory.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+    <div id="stars-container">
+        <div id="stars1"></div>
+        <div id="stars2"></div>
+        <div id="stars3"></div>
+    </div>
+
+    <div id="splash-screen">
+        <img src="sources/rock-splash.gif" alt="Loading ISRO Logo" class="splash-logo">
+        <div class="loading-text">ON BOARDING !!!!!</div>
+    </div>
+    <div id="main-content" class="hidden">
+        
+        <nav class="navbar" style="z-index: 1000;">
+            <div class="nav-brand">
+                <img src="sources/logo.gif" alt="ISRO Logo" class="nav-logo">
+                <span class="brand-text">ISRO-HACK</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">DASHBOARD</a></li>
+                <li><a href="Inventory.html">INVENTORY</a></li>
+                <li><a href="waste.html">WASTE MANAGEMENT</a></li>
+                <li><a href="simulation.html">SIMULATION</a></li>
+                <li><a href="about.html">ABOUT</a></li>
+
+            </ul>
+            <div class="hamburger">
+                <div class="line line1"></div>
+                <div class="line line2"></div>
+                <div class="line line3"></div>
+            </div>
+        </nav>
+
+        <body>
+            <div class="row">
+                <div class="col-md-8">
+                    <h2>Inventory Management</h2>
+                    <div class="card mb-4">
+                        <div class="card1">
+                        <div class="card-body">
+                            <h5 class="card-title">Search Inventory</h5>
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" id="searchInput" placeholder="Enter Item ID..." oninput="searchHandler(this.value)">
+                                <button class="btn btn-outline-secondary" type="button" onclick="searchHandler(document.getElementById('searchInput').value)">Search</button>
+                            </div>
+                            <div id="searchResults"></div>
+                        </div>
+                    </div>
+                    </div>
+            
+                    <div class="card3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Import Items</h5>
+                            <div class="drag-drop-zone" data-endpoint="/api/import/items">
+                                <p>Drag and drop your items CSV file here or click to select</p>
+                                <input type="file" class="d-none" accept=".csv">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+
+                <div class="card2">
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Import Containers</h5>
+                            <div class="drag-drop-zone" data-endpoint="/api/import/containers">
+                                <p>Drag and drop your containers CSV file here or click to select</p>
+                                <input type="file" class="d-none" accept=".csv">
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+
+                    <div class="card4">
+                    <div class="card mt-4">
+                        <div class="card-body">
+                            <h5 class="card-title">Export Arrangement</h5>
+                            <button class="btn btn-primary w-100" onclick="exportArrangement()">Export to CSV</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+            {% endblock %}
+            
+            {% block scripts %}
+            <script>
+            function exportArrangement() {
+                axios.get('/api/export/arrangement')
+                    .then(response => {
+                        // Create blob and download link
+                        const blob = new Blob([response.data.content], { type: 'text/csv' });
+                        const url = window.URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = 'arrangement_' + new Date().toISOString().split('T')[0] + '.csv';
+                        document.body.appendChild(a);
+                        a.click();
+                        window.URL.revokeObjectURL(url);
+                        a.remove();
+                        showAlert('Arrangement exported successfully');
+                    })
+                    .catch(error => showAlert(error.message, 'danger'));
+            }
+            
+            // Initialize file input click handlers
+            document.querySelectorAll('.drag-drop-zone').forEach(zone => {
+                const input = zone.querySelector('input[type="file"]');
+                zone.addEventListener('click', () => input.click());
+                input.addEventListener('change', (e) => {
+                    if (e.target.files.length > 0) {
+                        handleFileUpload(e.target.files[0], zone.dataset.endpoint);
+                    }
+                });
+            });
+            </script>
+
+</body>
+<script src="js/about.js"></script>
+</html>
