@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>isro-hack</title>
     <link rel="icon" type="image/x-icon" href="sources/favicon.jpg">
-    <link rel="stylesheet" href="css/inventory.css">
+    <link rel="stylesheet" href="css/main.css">
 
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
@@ -17,7 +17,7 @@
 
     <div id="splash-screen">
         <img src="sources/rock-splash.gif" alt="Loading ISRO Logo" class="splash-logo">
-        <div class="loading-text">IGNITION TO INVENTORY PAGE !!!!!</div>
+        <div class="loading-text">ON BOARDING !!!!!</div>
     </div>
     <div id="main-content" class="hidden">
         
@@ -42,7 +42,7 @@
         </nav>
 
         <body>
-            <div class="row">
+            <div class="inventory">
                 <div class="col-md-8">
                     <h2>Inventory Management</h2>
                     <div class="card mb-4">
@@ -94,6 +94,9 @@
                 </div>
             </div>
             </div>
+            {% endblock %}
+            
+            {% block scripts %}
             <script>
             function exportArrangement() {
                 axios.get('/api/export/arrangement')
