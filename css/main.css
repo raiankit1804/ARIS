@@ -1,0 +1,1899 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Space Grotesk', sans-serif;
+    background-color: #000000;
+    color: #ffffff;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    position: relative; 
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Navbar Base Styles */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 1rem 2.5rem;
+    background: #081A26;
+    backdrop-filter: blur(70px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+    z-index: 1000;
+    transition: padding 0.4s ease, background-color 0.4s ease, backdrop-filter 0.4s ease;
+    position: relative;
+}
+
+.navbar.scrolled {
+    padding: 0.5rem 2.5rem;
+    background: rgba(10, 32, 48, 0.6);
+    backdrop-filter: blur(15px);
+}
+
+/* Nav Brand */
+.nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.nav-logo {
+    height: 45px;
+    transition: transform 0.4s ease;
+}
+
+.brand-text {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #e0e0e0;
+    transition: color 0.3s ease;
+}
+
+.nav-brand:hover .nav-logo {
+    transform: rotate(360deg) scale(1.1);
+}
+
+.nav-brand:hover .brand-text {
+    color: #00ffff;
+}
+
+/* Nav Links */
+.nav-links {
+    display: flex;
+    gap: 2.5rem;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.nav-links li {
+    opacity: 0;
+    transform: translateY(-20px);
+    animation: navLinkFade 0.5s ease forwards;
+}
+
+/* Stagger link animation */
+.nav-links li:nth-child(1) { animation-delay: 0.2s; }
+.nav-links li:nth-child(2) { animation-delay: 0.4s; }
+.nav-links li:nth-child(3) { animation-delay: 0.6s; }
+.nav-links li:nth-child(4) { animation-delay: 0.8s; }
+
+.nav-links a {
+    font-size: 1rem;
+    font-weight: 500;
+    position: relative;
+    padding-bottom: 5px;
+    transition: color 0.3s ease;
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #00ffff, #00aaff);
+    transition: width 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.nav-links a:hover {
+    color: #00ffff;
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+/* Hamburger Menu */
+.hamburger {
+    display: none;
+    cursor: pointer;
+}
+
+.hamburger .line {
+    width: 28px;
+    height: 3px;
+    background-color: #ffffff;
+    margin: 6px 0;
+    border-radius: 2px;
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55); /* Elastic transition */
+}
+
+
+.hamburger.active .line1 {
+    transform: rotate(-45deg) translate(-7px, 7px);
+}
+
+.hamburger.active .line2 {
+    opacity: 0;
+}
+
+.hamburger.active .line3 {
+    transform: rotate(45deg) translate(-7px, -7px);
+}
+
+
+@keyframes navLinkFade {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+@media (max-width: 992px) {
+    .nav-links {
+        position: fixed;
+        left: auto;
+        top: 0;
+        transform: none;
+        right: -100%;
+        height: 100vh;
+        width: 60%;
+        max-width: 300px;
+        background: linear-gradient(to bottom, rgba(7, 27, 38, 0.98), rgba(10, 32, 48, 0.98));
+        backdrop-filter: blur(100px);
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 3rem;
+        transition: right 0.5s cubic-bezier(0.77, 0, 0.18, 1);
+        box-shadow: -5px 0 15px rgba(0,0,0,0.3);
+    }
+
+    .nav-links.active {
+        right: 0; 
+    }
+
+    .nav-links.active li {
+        opacity: 0;
+        transform: translateX(30px);
+        animation: mobileNavLinkFade 0.5s ease forwards;
+    }
+
+    .nav-links.active li:nth-child(1) { animation-delay: 0.25s; }
+    .nav-links.active li:nth-child(2) { animation-delay: 0.35s; }
+    .nav-links.active li:nth-child(3) { animation-delay: 0.45s; }
+    .nav-links.active li:nth-child(4) { animation-delay: 0.55s; }
+
+
+    .nav-links a {
+        font-size: 1.3rem;
+    }
+
+    .hamburger {
+        display: block;
+        z-index: 1001;
+        margin-left: auto;
+    }
+
+
+    .navbar,
+    .navbar.scrolled {
+        padding: 0.8rem 1.5rem;
+    }
+
+    .nav-logo {
+        height: 40px;
+    }
+    .brand-text {
+        font-size: 1.4rem;
+    }
+}
+
+@keyframes mobileNavLinkFade {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+
+.hidden {
+    display: none;
+    opacity: 0;
+}
+
+
+#splash-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000000; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.8s ease-out, visibility 0.8s ease-out;
+    opacity: 1;
+    visibility: visible;
+}
+
+#splash-screen.fade-out {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.splash-logo {
+    width: 150px; 
+    height: auto;
+    margin-bottom: 20px;
+    animation: pulse 2s infinite ease-in-out;
+}
+
+.loading-text {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.5rem;
+    color: #00ffff;
+    margin-top: 1rem;
+}
+
+#main-content {
+    opacity: 0;
+    transition: opacity 0.8s ease-in;
+}
+
+#main-content.visible {
+    opacity: 1;
+    display: block; 
+}
+
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+
+#stars-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    background: transparent;
+    z-index: -1; 
+    overflow: hidden; 
+}
+
+
+#stars1, #stars2, #stars3 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    background-repeat: repeat;
+    background-position: 0 0;
+}
+
+
+#stars1 {
+    background-image: radial-gradient(1px 1px at 20px 30px, #eee, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 40px 70px, #fff, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 90px 40px, #fff, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 130px 80px, #eee, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 160px 120px, #ddd, rgba(0,0,0,0));
+    background-size: 200px 200px;
+    animation: animStar 300s linear infinite;
+}
+
+
+#stars2 {
+    background-image: radial-gradient(2px 2px at 50px 100px, #fff, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 110px 150px, #eee, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 180px 90px, #fff, rgba(0,0,0,0));
+    background-size: 250px 250px;
+    animation: animStar 200s linear infinite;
+}
+
+
+#stars3 {
+    background-image: radial-gradient(3px 3px at 100px 200px, #fff, rgba(0,0,0,0)),
+    radial-gradient(3px 3px at 220px 100px, #ddd, rgba(0,0,0,0));
+    background-size: 300px 300px;
+    animation: animStar 500s linear infinite;
+}
+
+@keyframes animStar {
+    from {
+    background-position: 0 0;
+    }
+    to {
+    background-position: 0 -10000px;
+    }
+} 
+
+
+/*index page*/
+
+.index {
+    display: grid;                     
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 1.5rem;                       
+    padding: 1.5rem;                   
+    align-items: stretch;             
+}
+
+.index h2 {
+    grid-column: 1 / -1; 
+    text-align: center;  
+    margin: 0 0 1.5rem 0; 
+    padding: 0;
+}
+
+
+.index > h2:first-child { 
+    grid-row: 1;
+    grid-column: 1 / -1; 
+    text-align: center;
+    margin: 0 0 1.5rem 0;
+}
+
+.index > .index-card:nth-child(4) {
+    grid-row: 2;          
+    grid-column: 1 / -1; 
+    min-width: 0;
+}
+
+
+.index > .index-card:nth-child(2) {
+    grid-row: 3;          
+    grid-column: 1 / 2;   
+    min-width: 0;
+}
+
+.index > .index-card:nth-child(3) {
+    grid-row: 3;        
+    grid-column: 2 / 3;  
+    min-width: 0;
+
+}
+
+.index > .index-card2:nth-child(5) {
+    grid-row: 4;           
+    grid-column: 1 / 3;    
+    min-width: 0;
+}
+.index > .index-card:nth-child(6) {
+    grid-row: 4;           /* Place on row 4 */
+    grid-column: 3 / 4;    /* Place in column 3 */
+    min-width: 0;
+}
+
+
+.index-card, .index-card2 {
+    min-width: 0; 
+}
+
+
+.card-1, .card-2, .card-3, .card-4, .card-5 {
+    background: rgba(15, 32, 43, 0.7);
+    border: 1px solid rgba(0, 191, 255, 0.3);
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(5px);
+    color: #e0e0e0;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
+.card-1 h3, .card-2 h3, .card-3 h5, .card-4 h5, .card-5 h5 {
+    font-family: 'Orbitron', sans-serif;
+    color: #00ffff; 
+    margin-top: 0;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid rgba(0, 191, 255, 0.2);
+    padding-bottom: 0.5rem;
+}
+
+.card-5 .btn {
+    padding: 0.75rem 1.5rem;
+    text-align: center;
+    display: block; 
+    width: 100%;   
+    background: linear-gradient(145deg, rgba(8, 26, 38, 0.8), rgba(15, 32, 43, 0.9));
+    color: #e0e0e0;
+    border: 1px solid rgba(0, 191, 255, 0.4);
+    border-radius: 6px;
+    font-family: 'Orbitron', sans-serif; 
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.05);
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out, background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+    will-change: transform, box-shadow, background, border-color; 
+}
+
+
+.card-5 .btn:hover {
+    background: linear-gradient(145deg, rgba(10, 32, 48, 0.9), rgba(20, 45, 60, 0.95)); 
+    color: #ffffff; 
+    border-color: rgba(0, 220, 255, 0.7);
+    transform: scale(1.03); 
+    box-shadow: 0 6px 12px rgba(0, 191, 255, 0.2), inset 0 1px 2px rgba(255, 255, 255, 0.1); 
+}
+
+/* Active/Click effect */
+.card-5 .btn:active {
+    transform: scale(0.99); 
+    background: linear-gradient(145deg, rgba(5, 20, 30, 0.9), rgba(10, 25, 35, 0.95)); 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3), inset 0 2px 3px rgba(0, 0, 0, 0.2); 
+    border-color: rgba(0, 150, 200, 0.6); 
+    color: #c0c0c0;
+}
+
+
+.btn {
+    cursor: pointer;
+}
+
+/* --- Card 3 Search Input Styling & Animation --- */
+
+.card-3 .input-group {
+    display: flex; /* Ensure input and button align */
+    border: 1px solid rgba(0, 191, 255, 0.3); /* Add a border around the group */
+    border-radius: 6px; /* Match button radius */
+    background-color: rgba(8, 26, 38, 0.5); /* Dark theme background */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Transition for focus effect */
+    overflow: hidden; /* Keep button contained within rounded border */
+}
+
+/* Style the input field */
+.card-3 #quickSearch {
+    flex-grow: 1; /* Allow input to take available space */
+    background-color: transparent; /* Inherit group background */
+    border: none; /* Remove default input border */
+    padding: 0.75rem 1rem;
+    color: #e0e0e0; /* Light text */
+    font-family: 'Space Grotesk', sans-serif; /* Match theme font */
+    font-size: 0.95rem;
+    outline: none; /* Remove default focus outline */
+    min-width: 0; /* Prevent overflow issues in flex */
+}
+
+/* Placeholder text styling */
+.card-3 #quickSearch::placeholder {
+    color: rgba(224, 224, 224, 0.5); /* Lighter placeholder */
+    opacity: 1; /* Ensure visibility */
+}
+
+/* Focus effect for the whole input group */
+.card-3 .input-group:focus-within {
+    border-color: rgba(0, 220, 255, 0.7); /* Brighter cyan border on focus */
+    box-shadow: 0 0 8px rgba(0, 191, 255, 0.3); /* Add cyan glow */
+}
+
+/* Style the search button */
+.card-3 .input-group .btn {
+    /* Reset Bootstrap button styles if necessary */
+    border-radius: 0; /* Remove individual button radius */
+    border: none; /* Remove button border */
+    border-left: 1px solid rgba(0, 191, 255, 0.3); /* Separator line */
+
+    /* Apply theme styles (similar to Card 5 buttons) */
+    background: linear-gradient(145deg, rgba(10, 32, 48, 0.9), rgba(20, 45, 60, 0.95));
+    color: #e0e0e0;
+    padding: 0.75rem 1.2rem;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out, background 0.3s ease, filter 0.3s ease;
+}
+
+/* Hover effect for search button */
+.card-3 .input-group .btn:hover {
+    background: linear-gradient(145deg, rgba(15, 40, 58, 0.95), rgba(25, 55, 70, 1)); /* Slightly lighter */
+    color: #ffffff;
+    transform: scale(1.03); /* Enlarge slightly */
+    filter: brightness(1.1); /* Brighten slightly */
+    z-index: 2; /* Ensure hover effect is above input */
+    position: relative; /* Needed for z-index */
+}
+
+/* Active/Click effect for search button */
+.card-3 .input-group .btn:active {
+    transform: scale(0.98); /* Shrink slightly */
+    background: linear-gradient(145deg, rgba(5, 20, 30, 0.9), rgba(10, 25, 35, 0.95));
+    filter: brightness(0.9);
+}
+
+/* Search Results Area Styling */
+#quickSearchResults {
+    margin-top: 1rem; /* Ensure consistent margin */
+    min-height: 50px; /* Give it some space even when empty */
+    /* Add more styling as needed */
+    font-size: 0.9rem;
+}
+#quickSearchResults .alert { /* Style the result messages */
+    border-radius: 4px;
+    padding: 0.75rem 1rem;
+    margin-bottom: 0; /* Remove bottom margin if only one result shown */
+}
+#quickSearchResults .alert-success {
+    background-color: rgba(0, 255, 127, 0.15); /* Spring green-ish tint */
+    border: 1px solid rgba(0, 255, 127, 0.4);
+    color: #90ee90; /* Light green text */
+}
+#quickSearchResults .alert-warning {
+    background-color: rgba(255, 165, 0, 0.15); /* Orange tint */
+    border: 1px solid rgba(255, 165, 0, 0.4);
+    color: #ffa500; /* Orange text */
+}
+#quickSearchResults .alert-danger {
+    background-color: rgba(255, 69, 0, 0.15); /* Red tint */
+    border: 1px solid rgba(255, 69, 0, 0.4);
+    color: #ff4500; /* Red-orange text */
+}
+
+
+
+
+
+
+/* inventory page*/
+
+
+.inventory {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    padding: 2rem;
+    align-items: stretch;
+}
+
+.inventory h2 {
+    grid-column: 1 / -1;
+    text-align: center;
+    margin: 0 0 1.5rem 0;
+    padding: 0;
+}
+
+.inventory > h2:first-child { 
+    grid-row: 1;
+    grid-column: 1 / -1;
+    text-align: center;
+    margin: 0 0 1.5rem 0;
+}
+
+.inventory > .col-md-4:nth-child(4) {
+    grid-row: 2;          
+    grid-column: 1 / -1; 
+    min-width: 0;
+}
+
+.inventory > .col-md-4:nth-child(2) {
+    grid-row: 3;          
+    grid-column: 1 / 2;   
+    min-width: 0;
+}
+
+.inventory > .col-md-4:nth-child(3) {
+    grid-row: 3;        
+    grid-column: 2 / 3;  
+    min-width: 0;
+}
+
+.inventory > .col-md-8:nth-child(5) {
+    grid-row: 4;           
+    grid-column: 1 / 3;    
+    min-width: 0;
+}
+.inventory > .col-md-4:nth-child(6) {
+    grid-row: 4;           
+    grid-column: 3 / 4;    
+    min-width: 0;
+}
+
+.col-md-4, .col-md-8 {
+    min-width: 0; 
+}
+*/
+
+/* Card Styles (Adapted from index.css) - Applied to existing .card class */
+.card {
+    background: rgba(15, 32, 43, 0.7); 
+    border: 1px solid rgba(0, 191, 255, 0.3); 
+    border-radius: 10px;
+    padding: 1.5rem; /* Ensure consistent padding */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(5px);
+    color: #e0e0e0;
+    display: flex; /* Maintain flex if needed, or adjust */
+    flex-direction: column;
+    width: 100%; /* Ensure card takes full width of its container */
+    height: 100%; /* Ensure card takes full height if container allows */
+    margin-bottom: 1rem; /* Add some margin between cards if needed */
+}
+
+/* Style card titles used in inventory.html */
+.card .card-title {
+    font-family: 'Orbitron', sans-serif;
+    color: #00ffff; 
+    margin-top: 0;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid rgba(0, 191, 255, 0.2);
+    padding-bottom: 0.5rem;
+    font-size: 1.1rem; /* Adjusted size maybe */
+}
+
+/* Commenting out specific card-3/card-5 button/input styles for now */
+/* If specific button or input styling is needed, uncomment and adapt selectors */
+/*
+.card-5 .btn { ... }
+.card-5 .btn:hover { ... }
+.card-5 .btn:active { ... }
+.card-5 .btn.btn-primary { ... }
+.card-5 .btn.btn-warning { ... }
+.card-5 .btn.btn-info { ... }
+.btn { ... }
+.card-3 .input-group { ... }
+.card-3 #quickSearch { ... }
+.card-3 #quickSearch::placeholder { ... }
+.card-3 .input-group:focus-within { ... }
+.card-3 .input-group .btn { ... }
+.card-3 .input-group .btn:hover { ... }
+.card-3 .input-group .btn:active { ... }
+#quickSearchResults { ... }
+#quickSearchResults .alert { ... }
+#quickSearchResults .alert-success { ... }
+#quickSearchResults .alert-warning { ... }
+#quickSearchResults .alert-danger { ... }
+*/
+
+/* Ensure the existing styles for card1, card2 etc. don't conflict */
+/* Or remove them if the generic .card style is sufficient */
+
+/* Example: If card1 needs a specific tweak */
+.card1 {
+  /* Add specific overrides for card1 here if necessary */
+}
+
+/* Card Styles (from index.css) */
+.card-1, .card-2, .card-3, .card-4, .card-5 {
+    background: rgba(15, 32, 43, 0.7);
+    border: 1px solid rgba(0, 191, 255, 0.3);
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(5px);
+    color: #e0e0e0;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
+.card-1 h3, .card-2 h3, .card-3 h5, .card-4 h5, .card-5 h5 {
+    font-family: 'Orbitron', sans-serif;
+    color: #00ffff; 
+    margin-top: 0;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid rgba(0, 191, 255, 0.2);
+    padding-bottom: 0.5rem;
+}
+
+.card-5 .btn {
+    padding: 0.75rem 1.5rem;
+    text-align: center;
+    display: block; 
+    width: 100%;   
+    background: linear-gradient(145deg, rgba(8, 26, 38, 0.8), rgba(15, 32, 43, 0.9));
+    color: #e0e0e0;
+    border: 1px solid rgba(0, 191, 255, 0.4);
+    border-radius: 6px;
+    font-family: 'Orbitron', sans-serif; 
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.05);
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out, background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+    will-change: transform, box-shadow, background, border-color; 
+}
+
+
+.card-5 .btn:hover {
+    background: linear-gradient(145deg, rgba(10, 32, 48, 0.9), rgba(20, 45, 60, 0.95)); 
+    color: #ffffff; 
+    border-color: rgba(0, 220, 255, 0.7);
+    transform: scale(1.03); 
+    box-shadow: 0 6px 12px rgba(0, 191, 255, 0.2), inset 0 1px 2px rgba(255, 255, 255, 0.1); 
+}
+
+/* Active/Click effect */
+.card-5 .btn:active {
+    transform: scale(0.99); 
+    background: linear-gradient(145deg, rgba(5, 20, 30, 0.9), rgba(10, 25, 35, 0.95)); 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3), inset 0 2px 3px rgba(0, 0, 0, 0.2); 
+    border-color: rgba(0, 150, 200, 0.6); 
+    color: #c0c0c0;
+}
+
+
+/* These might be needed if the default .btn-primary etc. interfere too much */
+.card-5 .btn.btn-primary { /* Example for Manage Inventory */
+   /* You could override specific bootstrap background/border here if needed, */
+   /* but the rules above should take precedence due to specificity (.card-5 .btn) */
+}
+.card-5 .btn.btn-warning { /* Example for Check Waste Items */
+   /* Specific overrides for warning button */
+}
+.card-5 .btn.btn-info { /* Example for Run Simulation */
+   /* Specific overrides for info button */
+}
+
+
+/* --- Make sure general .btn styles don't conflict --- */
+/* If you have general .btn styles, ensure they don't override */
+/* the transition property added above */
+.btn {
+    /* ... other btn styles like padding, border-radius, etc. ... */
+    cursor: pointer;
+    /* Ensure transitions defined elsewhere don't interfere,
+        or consolidate transitions here and remove from .card-5 .btn */
+}
+
+/* --- Card 3 Search Input Styling & Animation --- */
+
+.card-3 .input-group {
+    display: flex; /* Ensure input and button align */
+    border: 1px solid rgba(0, 191, 255, 0.3); /* Add a border around the group */
+    border-radius: 6px; /* Match button radius */
+    background-color: rgba(8, 26, 38, 0.5); /* Dark theme background */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Transition for focus effect */
+    overflow: hidden; /* Keep button contained within rounded border */
+}
+
+/* Style the input field */
+.card-3 #quickSearch {
+    flex-grow: 1; /* Allow input to take available space */
+    background-color: transparent; /* Inherit group background */
+    border: none; /* Remove default input border */
+    padding: 0.75rem 1rem;
+    color: #e0e0e0; /* Light text */
+    font-family: 'Space Grotesk', sans-serif; /* Match theme font */
+    font-size: 0.95rem;
+    outline: none; /* Remove default focus outline */
+    min-width: 0; /* Prevent overflow issues in flex */
+}
+
+/* Placeholder text styling */
+.card-3 #quickSearch::placeholder {
+    color: rgba(224, 224, 224, 0.5); /* Lighter placeholder */
+    opacity: 1; /* Ensure visibility */
+}
+
+/* Focus effect for the whole input group */
+.card-3 .input-group:focus-within {
+    border-color: rgba(0, 220, 255, 0.7); /* Brighter cyan border on focus */
+    box-shadow: 0 0 8px rgba(0, 191, 255, 0.3); /* Add cyan glow */
+}
+
+/* Style the search button */
+.card-3 .input-group .btn {
+    /* Reset Bootstrap button styles if necessary */
+    border-radius: 0; /* Remove individual button radius */
+    border: none; /* Remove button border */
+    border-left: 1px solid rgba(0, 191, 255, 0.3); /* Separator line */
+
+    /* Apply theme styles (similar to Card 5 buttons) */
+    background: linear-gradient(145deg, rgba(10, 32, 48, 0.9), rgba(20, 45, 60, 0.95));
+    color: #e0e0e0;
+    padding: 0.75rem 1.2rem;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out, background 0.3s ease, filter 0.3s ease;
+}
+
+/* Hover effect for search button */
+.card-3 .input-group .btn:hover {
+    background: linear-gradient(145deg, rgba(15, 40, 58, 0.95), rgba(25, 55, 70, 1)); /* Slightly lighter */
+    color: #ffffff;
+    transform: scale(1.03); /* Enlarge slightly */
+    filter: brightness(1.1); /* Brighten slightly */
+    z-index: 2; /* Ensure hover effect is above input */
+    position: relative; /* Needed for z-index */
+}
+
+/* Active/Click effect for search button */
+.card-3 .input-group .btn:active {
+    transform: scale(0.98); /* Shrink slightly */
+    background: linear-gradient(145deg, rgba(5, 20, 30, 0.9), rgba(10, 25, 35, 0.95));
+    filter: brightness(0.9);
+}
+
+/* Search Results Area Styling */
+#quickSearchResults {
+    margin-top: 1rem; /* Ensure consistent margin */
+    min-height: 50px; /* Give it some space even when empty */
+    /* Add more styling as needed */
+    font-size: 0.9rem;
+}
+#quickSearchResults .alert { /* Style the result messages */
+    border-radius: 4px;
+    padding: 0.75rem 1rem;
+    margin-bottom: 0; /* Remove bottom margin if only one result shown */
+}
+#quickSearchResults .alert-success {
+    background-color: rgba(0, 255, 127, 0.15); /* Spring green-ish tint */
+    border: 1px solid rgba(0, 255, 127, 0.4);
+    color: #90ee90; /* Light green text */
+}
+#quickSearchResults .alert-warning {
+    background-color: rgba(255, 165, 0, 0.15); /* Orange tint */
+    border: 1px solid rgba(255, 165, 0, 0.4);
+    color: #ffa500; /* Orange text */
+}
+#quickSearchResults .alert-danger {
+    background-color: rgba(255, 69, 0, 0.15); /* Red tint */
+    border: 1px solid rgba(255, 69, 0, 0.4);
+    color: #ff4500; /* Red-orange text */
+}
+
+/* Add flex display to the main row */
+.row {
+    display: flex;       /* Arrange direct children horizontally */
+    flex-wrap: wrap;     /* Allow items to wrap to next line if needed */
+    padding: 1rem;       /* Add some padding around the row */
+    gap: 1rem;           /* Add gap between flex items */
+}
+
+/* Adjustments for columns within the flex row */
+.col-md-8,
+.col-md-4 { 
+    flex-grow: 1; /* Allow columns to grow */
+    /* Maybe set a basis or max-width if needed */
+     min-width: 250px; /* Prevent items from becoming too small */
+}
+
+/* === Specific Card Adjustments for inventory.html === */
+
+/* Reduce height of the first card (Search Inventory) in the left column */
+.col-md-8 > .card.mb-4 {
+    height: auto; /* Override the generic height: 100% */
+    /* Optionally add a max-height if auto is too small/large */
+    /* max-height: 50vh; */ 
+}
+
+/* === Button Styling === */
+
+/* General Button style within cards */
+.card .btn {
+    padding: 0.75rem 1.5rem;
+    text-align: center;
+    display: inline-block; /* Changed from block */
+    width: auto; /* Changed from 100% */
+    background: linear-gradient(145deg, rgba(8, 26, 38, 0.8), rgba(15, 32, 43, 0.9));
+    color: #e0e0e0;
+    border: 1px solid rgba(0, 191, 255, 0.4);
+    border-radius: 6px;
+    font-family: 'Orbitron', sans-serif; 
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.05);
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out, background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+    will-change: transform, box-shadow, background, border-color;
+    margin: 0.25rem; /* Add slight margin */
+}
+
+.card .btn:hover {
+    background: linear-gradient(145deg, rgba(10, 32, 48, 0.9), rgba(20, 45, 60, 0.95)); 
+    color: #ffffff; 
+    border-color: rgba(0, 220, 255, 0.7);
+    transform: scale(1.03); 
+    box-shadow: 0 6px 12px rgba(0, 191, 255, 0.2), inset 0 1px 2px rgba(255, 255, 255, 0.1); 
+}
+
+.card .btn:active {
+    transform: scale(0.99); 
+    background: linear-gradient(145deg, rgba(5, 20, 30, 0.9), rgba(10, 25, 35, 0.95)); 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3), inset 0 2px 3px rgba(0, 0, 0, 0.2); 
+    border-color: rgba(0, 150, 200, 0.6); 
+    color: #c0c0c0;
+}
+
+/* Specific overrides for buttons if needed (like the full width export button) */
+.card4 .btn.w-100 { /* Target the export button */
+    display: block;
+    width: 100%;
+}
+
+/* Styling for the search input group and its button */
+.card .input-group {
+    display: flex;
+    border: 1px solid rgba(0, 191, 255, 0.3);
+    border-radius: 6px;
+    background-color: rgba(8, 26, 38, 0.5);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+    margin-bottom: 1rem; /* Ensure spacing */
+}
+
+.card .input-group .form-control { /* Style the input */
+    flex-grow: 1;
+    background-color: transparent;
+    border: none;
+    padding: 0.75rem 1rem;
+    color: #e0e0e0;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.95rem;
+    outline: none;
+    min-width: 0;
+}
+.card .input-group .form-control::placeholder {
+    color: rgba(224, 224, 224, 0.5);
+    opacity: 1;
+}
+
+.card .input-group:focus-within {
+    border-color: rgba(0, 220, 255, 0.7);
+    box-shadow: 0 0 8px rgba(0, 191, 255, 0.3);
+}
+
+.card .input-group .btn {
+    border-radius: 0; /* Remove radius for button inside group */
+    border: none;
+    border-left: 1px solid rgba(0, 191, 255, 0.3);
+    /* Inherits general .card .btn styles, no need to repeat hover/active unless different */
+    margin: 0; /* Remove margin for button inside group */
+}
+
+/* === Drag and Drop Area Styling === */
+
+.drag-drop-zone {
+    border: 2px dashed rgba(0, 191, 255, 0.5);
+    border-radius: 8px;
+    padding: 2rem 1rem;
+    text-align: center;
+    background-color: rgba(8, 26, 38, 0.3);
+    color: rgba(224, 224, 224, 0.7);
+    cursor: pointer;
+    transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.2s ease-out;
+}
+
+.drag-drop-zone p {
+    margin: 0;
+    font-size: 0.9rem;
+    pointer-events: none; /* Prevent text from interfering with clicks */
+}
+
+.drag-drop-zone:hover {
+    background-color: rgba(15, 32, 43, 0.5); 
+    border-color: rgba(0, 220, 255, 0.8);
+    transform: scale(1.02); /* Slight grow effect */
+    color: #ffffff;
+}
+
+/* Basic active state simulation */
+.drag-drop-zone:active {
+    background-color: rgba(20, 45, 60, 0.6);
+    border-color: #00ffff;
+    transform: scale(0.99);
+} 
+
+
+
+
+
+
+/* waste page*/
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* General Styles */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Space Grotesk', sans-serif;
+    background-color: #000000;
+    color: #ffffff;
+    overflow-x: hidden; /* Prevent horizontal scroll */
+    overflow-y: hidden; /* Re-enable scrolling via JS after splash */
+    position: relative; /* Needed for z-index stacking */
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Navbar Base Styles */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 1rem 2.5rem;
+    background: #081A26;
+    backdrop-filter: blur(70px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+    z-index: 1000;
+    transition: padding 0.4s ease, background-color 0.4s ease, backdrop-filter 0.4s ease;
+    position: relative;
+}
+
+.navbar.scrolled {
+    padding: 0.5rem 2.5rem;
+    background: rgba(10, 32, 48, 0.6);
+    backdrop-filter: blur(15px);
+}
+
+/* Nav Brand */
+.nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.nav-logo {
+    height: 45px;
+    transition: transform 0.4s ease;
+}
+
+.brand-text {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #e0e0e0;
+    transition: color 0.3s ease;
+}
+
+.nav-brand:hover .nav-logo {
+    transform: rotate(360deg) scale(1.1);
+}
+
+.nav-brand:hover .brand-text {
+    color: #00ffff;
+}
+
+/* Nav Links */
+.nav-links {
+    display: flex;
+    gap: 2.5rem;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.nav-links li {
+    opacity: 0;
+    transform: translateY(-20px);
+    animation: navLinkFade 0.5s ease forwards;
+}
+
+/* Stagger link animation */
+.nav-links li:nth-child(1) { animation-delay: 0.2s; }
+.nav-links li:nth-child(2) { animation-delay: 0.4s; }
+.nav-links li:nth-child(3) { animation-delay: 0.6s; }
+.nav-links li:nth-child(4) { animation-delay: 0.8s; }
+
+.nav-links a {
+    font-size: 1rem;
+    font-weight: 500;
+    position: relative;
+    padding-bottom: 5px;
+    transition: color 0.3s ease;
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #00ffff, #00aaff);
+    transition: width 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.nav-links a:hover {
+    color: #00ffff;
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+/* Hamburger Menu */
+.hamburger {
+    display: none;
+    cursor: pointer;
+}
+
+.hamburger .line {
+    width: 28px;
+    height: 3px;
+    background-color: #ffffff;
+    margin: 6px 0;
+    border-radius: 2px;
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55); /* Elastic transition */
+}
+
+/* Hamburger Animation (Toggled via JS) */
+.hamburger.active .line1 {
+    transform: rotate(-45deg) translate(-7px, 7px);
+}
+
+.hamburger.active .line2 {
+    opacity: 0;
+}
+
+.hamburger.active .line3 {
+    transform: rotate(45deg) translate(-7px, -7px);
+}
+
+/* Keyframes for Animations */
+@keyframes navLinkFade {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .nav-links {
+        position: fixed;
+        left: auto;
+        top: 0;
+        transform: none;
+        right: -100%;
+        height: 100vh;
+        width: 60%;
+        max-width: 300px;
+        background: linear-gradient(to bottom, rgba(7, 27, 38, 0.98), rgba(10, 32, 48, 0.98));
+        backdrop-filter: blur(100px);
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 3rem;
+        transition: right 0.5s cubic-bezier(0.77, 0, 0.18, 1);
+        box-shadow: -5px 0 15px rgba(0,0,0,0.3);
+    }
+
+    .nav-links.active {
+        right: 0; /* Slide in */
+    }
+
+    /* Ensure mobile links are visible immediately when menu opens */
+    .nav-links.active li {
+        opacity: 0;
+        transform: translateX(30px);
+        animation: mobileNavLinkFade 0.5s ease forwards;
+    }
+
+    .nav-links.active li:nth-child(1) { animation-delay: 0.25s; }
+    .nav-links.active li:nth-child(2) { animation-delay: 0.35s; }
+    .nav-links.active li:nth-child(3) { animation-delay: 0.45s; }
+    .nav-links.active li:nth-child(4) { animation-delay: 0.55s; }
+
+
+    .nav-links a {
+        font-size: 1.3rem;
+    }
+
+    .hamburger {
+        display: block;
+        z-index: 1001;
+        margin-left: auto;
+    }
+
+    /* Adjust navbar padding on mobile */
+    .navbar,
+    .navbar.scrolled {
+        padding: 0.8rem 1.5rem;
+    }
+
+    .nav-logo {
+        height: 40px;
+    }
+    .brand-text {
+        font-size: 1.4rem;
+    }
+}
+
+@keyframes mobileNavLinkFade {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Helper class to initially hide main content */
+.hidden {
+    display: none;
+    opacity: 0;
+}
+
+/* Splash Screen Styles */
+#splash-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000000; /* Match body background */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.8s ease-out, visibility 0.8s ease-out;
+    opacity: 1;
+    visibility: visible;
+}
+
+#splash-screen.fade-out {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.splash-logo {
+    width: 150px; 
+    height: auto;
+    margin-bottom: 20px;
+    animation: pulse 2s infinite ease-in-out;
+}
+
+.loading-text {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.5rem;
+    color: #00ffff;
+    margin-top: 1rem;
+}
+
+#main-content {
+    opacity: 0;
+    transition: opacity 0.8s ease-in;
+}
+
+#main-content.visible {
+    opacity: 1;
+    display: block; 
+}
+
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+
+#stars-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    background: transparent;
+    z-index: -1; 
+    overflow: hidden; 
+}
+
+
+#stars1, #stars2, #stars3 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    background-repeat: repeat;
+    background-position: 0 0;
+}
+
+
+#stars1 {
+    background-image: radial-gradient(1px 1px at 20px 30px, #eee, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 40px 70px, #fff, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 90px 40px, #fff, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 130px 80px, #eee, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 160px 120px, #ddd, rgba(0,0,0,0));
+    background-size: 200px 200px;
+    animation: animStar 300s linear infinite;
+}
+
+
+#stars2 {
+    background-image: radial-gradient(2px 2px at 50px 100px, #fff, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 110px 150px, #eee, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 180px 90px, #fff, rgba(0,0,0,0));
+    background-size: 250px 250px;
+    animation: animStar 200s linear infinite;
+}
+
+
+#stars3 {
+    background-image: radial-gradient(3px 3px at 100px 200px, #fff, rgba(0,0,0,0)),
+    radial-gradient(3px 3px at 220px 100px, #ddd, rgba(0,0,0,0));
+    background-size: 300px 300px;
+    animation: animStar 500s linear infinite;
+}
+
+@keyframes animStar {
+    from {
+    background-position: 0 0;
+    }
+    to {
+    background-position: 0 -10000px;
+    }
+}
+
+/* === Card Styling (Adapted from index.css) === */
+.card {
+    background: rgba(15, 32, 43, 0.7);
+    border: 1px solid rgba(0, 191, 255, 0.3);
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(5px);
+    color: #e0e0e0;
+    display: flex; 
+    flex-direction: column;
+    width: 70%; 
+    height: 100%; 
+    margin-bottom: 1rem; 
+}
+
+.card .card-title {
+    font-family: 'Orbitron', sans-serif;
+    color: #00ffff;
+    margin-top: 0;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid rgba(0, 191, 255, 0.2);
+    padding-bottom: 0.5rem;
+    font-size: 1.1rem; 
+}
+
+/* Style for nested cards (like waste items) */
+.waste-item.card {
+    background: rgba(20, 40, 53, 0.6);
+    border-color: rgba(0, 191, 255, 0.2);
+    margin-bottom: 0.75rem;
+    padding: 1rem;
+}
+
+/* === Button Styling (Adapted from inventory.css) === */
+.card .btn {
+    padding: 0.75rem 1.5rem;
+    text-align: center;
+    display: inline-block;
+    width: auto; 
+    background: linear-gradient(145deg, rgba(8, 26, 38, 0.8), rgba(15, 32, 43, 0.9));
+    color: #e0e0e0;
+    border: 1px solid rgba(0, 191, 255, 0.4);
+    border-radius: 6px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.05);
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out, background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+    will-change: transform, box-shadow, background, border-color;
+    margin: 0.25rem;
+}
+
+.card .btn:hover {
+    background: linear-gradient(145deg, rgba(10, 32, 48, 0.9), rgba(20, 45, 60, 0.95));
+    color: #ffffff;
+    border-color: rgba(0, 220, 255, 0.7);
+    transform: scale(1.03);
+    box-shadow: 0 6px 12px rgba(0, 191, 255, 0.2), inset 0 1px 2px rgba(255, 255, 255, 0.1);
+}
+
+.card .btn:active {
+    transform: scale(0.99);
+    background: linear-gradient(145deg, rgba(5, 20, 30, 0.9), rgba(10, 25, 35, 0.95));
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3), inset 0 2px 3px rgba(0, 0, 0, 0.2);
+    border-color: rgba(0, 150, 200, 0.6);
+    color: #c0c0c0;
+}
+
+/* Ensure full width buttons take effect */
+.card .btn.w-100 {
+    display: block;
+    width: 100%;
+}
+
+/* === Form Styling === */
+.form-label {
+    color: #00ffff; /* Cyan labels */
+    font-size: 0.9rem;
+    margin-bottom: 0.3rem;
+}
+
+.form-control {
+    background-color: rgba(8, 26, 38, 0.5); /* Dark background */
+    border: 1px solid rgba(0, 191, 255, 0.3); /* Cyan border */
+    border-radius: 6px;
+    padding: 0.75rem 1rem;
+    color: #e0e0e0; /* Light text */
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.95rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    width: 100%; /* Ensure full width */
+    margin-bottom: 1rem; /* Add spacing below inputs */
+}
+
+.form-control:focus {
+    background-color: rgba(15, 32, 43, 0.7); /* Slightly lighter on focus */
+    border-color: rgba(0, 220, 255, 0.7); /* Brighter cyan border */
+    box-shadow: 0 0 8px rgba(0, 191, 255, 0.3); /* Cyan glow */
+    outline: none;
+    color: #ffffff;
+}
+
+/* Style specific input types if needed */
+input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+    filter: invert(0.8) brightness(1.5); /* Make the date picker icon visible */
+    cursor: pointer;
+}
+
+/* === Layout and Spacing Adjustments === */
+
+#main-content .row {
+    padding: 1rem; /* Ensure row has some padding */
+    display: flex; /* Arrange columns side-by-side */
+    flex-wrap: wrap; /* Allow wrapping on small screens */
+    gap: 1rem; /* Add space between columns */
+    align-items: flex-start; /* Align columns to the top */
+}
+
+/* Adjust H2 margin */
+#main-content .row h2 {
+    text-align: center; /* Center the title */
+    margin-top: 1rem; /* Add some top margin */
+    margin-bottom: 2rem; /* Increase bottom margin */
+    width: 100%; /* Ensure title takes full width before columns */
+    order: -1; /* Place title before flex items if needed, though it's likely outside the direct flex children */
+}
+
+/* Make the direct child columns equal width (50%) */
+#main-content .row > .col-md-8,
+#main-content .row > .col-md-4 {
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: calc(50% - 0.5rem); /* 50% minus half the gap */
+    padding: 0 0.5rem; /* Add some horizontal padding inside columns */
+    /* Override potential min-width if it conflicts */
+    min-width: auto; 
+}
+
+/* Add top margin specifically to the second column */
+#main-content .row > .col-md-4 {
+    margin-top: 2rem; 
+}
+
+/* Card margin is already set to margin-bottom: 1rem */ 
+
+
+
+
+/*  simulation page*/
+
+
+.card {
+    background: rgba(15, 32, 43, 0.7);
+    border: 1px solid rgba(0, 191, 255, 0.3);
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(5px);
+    color: #e0e0e0;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    margin-bottom: 1rem;
+}
+
+.card .card-title {
+    font-family: 'Orbitron', sans-serif;
+    color: #00ffff;
+    margin-top: 0;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid rgba(0, 191, 255, 0.2);
+    padding-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+
+/* === Button Styling (Adapted from inventory.css) === */
+.card .btn {
+    padding: 0.75rem 1.5rem;
+    text-align: center;
+    display: inline-block;
+    width: auto;
+    background: linear-gradient(145deg, rgba(8, 26, 38, 0.8), rgba(15, 32, 43, 0.9));
+    color: #e0e0e0;
+    border: 1px solid rgba(0, 191, 255, 0.4);
+    border-radius: 6px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.05);
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out, background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+    will-change: transform, box-shadow, background, border-color;
+    margin: 0.25rem;
+}
+
+.card .btn:hover {
+    background: linear-gradient(145deg, rgba(10, 32, 48, 0.9), rgba(20, 45, 60, 0.95));
+    color: #ffffff;
+    border-color: rgba(0, 220, 255, 0.7);
+    transform: scale(1.03);
+    box-shadow: 0 6px 12px rgba(0, 191, 255, 0.2), inset 0 1px 2px rgba(255, 255, 255, 0.1);
+}
+
+.card .btn:active {
+    transform: scale(0.99);
+    background: linear-gradient(145deg, rgba(5, 20, 30, 0.9), rgba(10, 25, 35, 0.95));
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3), inset 0 2px 3px rgba(0, 0, 0, 0.2);
+    border-color: rgba(0, 150, 200, 0.6);
+    color: #c0c0c0;
+}
+
+/* Ensure full width buttons take effect if needed */
+.card .btn.w-100 {
+    display: block;
+    width: 100%;
+}
+
+/* Style outline buttons used in simulation form */
+.card .btn.btn-outline-secondary,
+.card .btn.btn-outline-danger {
+    background: transparent;
+    border-color: rgba(0, 191, 255, 0.5);
+    color: rgba(0, 191, 255, 0.8);
+    box-shadow: none;
+}
+
+.card .btn.btn-outline-secondary:hover,
+.card .btn.btn-outline-danger:hover {
+    background: rgba(0, 191, 255, 0.1);
+    border-color: rgba(0, 220, 255, 0.7);
+    color: #00ffff;
+    transform: scale(1.03);
+}
+
+.card .btn.btn-outline-danger:hover {
+    background: rgba(255, 69, 0, 0.1);
+    border-color: rgba(255, 69, 0, 0.7);
+    color: #ff4500;
+}
+
+.card .btn.btn-outline-secondary:active,
+.card .btn.btn-outline-danger:active {
+    transform: scale(0.99);
+    background: rgba(0, 191, 255, 0.2);
+    color: #00aaff;
+}
+
+.card .btn.btn-outline-danger:active {
+    background: rgba(255, 69, 0, 0.2);
+    color: #cc3700;
+}
+
+/* === Form Styling === */
+.form-label {
+    color: #00ffff;
+    font-size: 0.9rem;
+    margin-bottom: 0.3rem;
+}
+
+.form-control {
+    background-color: rgba(8, 26, 38, 0.5);
+    border: 1px solid rgba(0, 191, 255, 0.3);
+    border-radius: 6px;
+    padding: 0.75rem 1rem;
+    color: #e0e0e0;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.95rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.form-control:focus {
+    background-color: rgba(15, 32, 43, 0.7);
+    border-color: rgba(0, 220, 255, 0.7);
+    box-shadow: 0 0 8px rgba(0, 191, 255, 0.3);
+    outline: none;
+    color: #ffffff;
+}
+
+/* Styling for the add/remove item input groups */
+.card #itemsList .input-group {
+    display: flex;
+    border: 1px solid rgba(0, 191, 255, 0.3);
+    border-radius: 6px;
+    background-color: rgba(8, 26, 38, 0.5);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+    margin-bottom: 0.5rem; /* Less margin for list items */
+}
+
+.card #itemsList .input-group .form-control {
+    flex-grow: 1;
+    margin-bottom: 0; /* Remove bottom margin */
+    border: none; /* Remove individual border */
+    border-right: 1px solid rgba(0, 191, 255, 0.3); /* Separator */
+    border-radius: 0;
+}
+
+.card #itemsList .input-group .btn {
+    margin: 0; /* Remove margin */
+    border: none;
+    border-radius: 0;
+}
+
+.card #itemsList .input-group:focus-within {
+    border-color: rgba(0, 220, 255, 0.7);
+    box-shadow: 0 0 8px rgba(0, 191, 255, 0.3);
+}
+
+/* Style results area */
+#simulationResults .alert {
+    background-color: rgba(0, 191, 255, 0.1);
+    border: 1px solid rgba(0, 191, 255, 0.3);
+    color: #afeeee; /* Pale turquoise */
+    border-radius: 6px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+#simulationResults ul {
+    list-style: disc;
+    margin-left: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+#simulationResults h6 {
+    color: #00ffff;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    font-family: 'Orbitron', sans-serif;
+}
+
+/* === Layout Adjustments for Simulation Page === */
+
+/* Ensure the main row uses flex and center its items */
+#main-content .row {
+    display: flex;
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    justify-content: center; /* Center the columns horizontally */
+    gap: 1rem; /* Maintain gap between columns */
+    padding: 1rem; /* Maintain padding */
+    margin-top: 7rem; /* Add margin here instead */
+}
+
+/* Adjust size of col-md-6 specifically for this page */
+#main-content .row .col-md-6 {
+    flex-grow: 0; /* Do not allow columns to grow */
+    flex-shrink: 0; /* Prevent shrinking for consistency */
+    /* Set basis to half of original 50% */
+    flex-basis: 25%; 
+    min-width: 300px; /* Keep minimum width */
+    max-width: none; 
+}
+
+/* Remove or comment out the :first-child override */
+/* 
+#main-content .row .col-md-6:first-child {
+    flex-basis: 40%; 
+}
+*/ 
+
+
+
+
+/*  ABOUT PAGE*/
+
+
+.card {
+    background: rgba(15, 32, 43, 0.7);
+    border: 1px solid rgba(0, 191, 255, 0.3);
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    /* backdrop-filter: blur(5px); */ /* Commented out for performance */
+    color: #e0e0e0;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%; /* Allow cards to potentially have equal height */
+    margin-bottom: 1rem;
+    overflow: hidden; /* Prevent content spill */
+}
+
+/* === About Page Specific Styles === */
+
+/* Row layout for team cards */
+#main-content .heading{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Center the cards in the row */
+    gap: 1.5rem; /* Space between card columns */
+    padding: 1rem 2rem; /* Padding around the row */
+}
+
+/* Title Styling */
+#main-content .heading h2 {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 2rem;
+    font-family: 'Orbitron', sans-serif;
+    color: #00ffff;
+}
+
+/* Column for each team member card */
+.team-member-col {
+    flex: 0 1 250px; /* Allow shrinking, basis of 250px, don't grow */
+    display: flex; /* Ensure card inside stretches if needed */
+}
+
+/* Styling for the card itself */
+.about-card {
+    align-items: center; /* Center items vertically */
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Add transition for hover */
+}
+
+/* Hover effect for the card */
+.team-member-col:hover .about-card {
+    transform: translateY(-5px) scale(1.03); /* Lift and scale up slightly */
+    box-shadow: 0 10px 25px rgba(0, 191, 255, 0.3); /* Enhance shadow */
+}
+
+/* Team member image */
+.about-card img {
+    width: 190px; /* Keep original width */
+    height: 270px; /* Further increased height (180 * 1.5) */
+    /* border-radius: 50%; */ /* Removed to make it non-circular */
+    object-fit: cover; /* Ensure image covers the area well */
+    border: none; /* Removed border */
+    margin-bottom: 1rem;
+    box-shadow: 0 0 15px rgba(0, 191, 255, 0.2); /* Keep shadow */
+    /* transition: border-color 0.3s ease; */ /* Removed border transition */
+    transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), 
+                filter 0.4s ease, 
+                box-shadow 0.4s ease; /* Add transitions for hover effect */
+    cursor: pointer; /* Indicate it's interactive */
+}
+
+/* Hover animation for the image */
+.about-card img:hover {
+    transform: scale(1.08); /* Scale up slightly */
+    filter: brightness(1.15); /* Make it slightly brighter */
+    box-shadow: 0 0 25px rgba(0, 220, 255, 0.4); /* Enhance glow */
+}
+
+/* Team member name */
+.about-card h4 {
+    font-family: 'Orbitron', sans-serif;
+    color: #00ffff;
+    margin-top: 0.5rem;
+    margin-bottom: 0;
+    font-size: 1.1rem;
+} 
