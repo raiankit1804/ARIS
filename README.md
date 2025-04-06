@@ -17,7 +17,7 @@ ARIS-FRONTEND is a basic web application that showcases the usage of HTML for st
 
 ## Demo
 
-You can view a live demo of the project [here]((https://raiankit1804.github.io/ARIS-FRONTEND/))
+You can view a live demo of the project [here](https://raiankit1804.github.io/ARIS-FRONTEND/)
 
 ## Installation
 
